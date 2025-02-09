@@ -1,5 +1,6 @@
 package org.example.service;
 
+import lombok.AllArgsConstructor;
 import org.example.entities.RefreshToken;
 import org.example.entities.UserInfo;
 import org.example.repository.RefreshTokenRepository;
@@ -12,6 +13,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@AllArgsConstructor
 public class RefreshTokenService {
     @Autowired
     RefreshTokenRepository refreshTokenRepository;
