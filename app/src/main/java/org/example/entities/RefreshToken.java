@@ -19,15 +19,15 @@ import java.time.Instant;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Builder
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@AllArgsConstructor
 @Table(name = "tokens")
 public class RefreshToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     private String token;
 

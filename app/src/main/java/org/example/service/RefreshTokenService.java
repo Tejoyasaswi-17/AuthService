@@ -6,6 +6,7 @@ import org.example.entities.UserInfo;
 import org.example.repository.RefreshTokenRepository;
 import org.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -22,7 +23,9 @@ public class RefreshTokenService {
     UserRepository userRepository;
 
     public RefreshToken createRefreshToken(String username) {
-        UserInfo userInfo = userRepository.findByUsername(username);
+        UserInfo userInfo = userRepository
+                .findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Couldn't find the user!!"));
         RefreshToken refreshToken = RefreshToken.builder()
                 .userInfo(userInfo)
                 .token(UUID.randomUUID().toString())

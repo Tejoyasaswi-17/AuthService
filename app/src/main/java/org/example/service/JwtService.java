@@ -68,7 +68,3 @@ public class JwtService {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 }
-
-//CREATE USER 'root'@'192.168.1.7' IDENTIFIED BY 'PASSWORD';
-//GRANT ALL PRIVILEGES ON *.* TO 'root'@'192.168.1.7' WITH GRANT OPTION;
-//FLUSH PRIVILEGES;

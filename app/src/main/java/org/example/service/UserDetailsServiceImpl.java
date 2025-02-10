@@ -12,9 +12,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -24,22 +26,22 @@ import java.util.UUID;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserInfo user = userRepository.findByUsername(username);
-        if (user == null) {
-            throw new UsernameNotFoundException("Couldn't find the user!!");
-        }
+        Optional<UserInfo> userOptional = userRepository.findByUsername(username);
+        UserInfo user = userOptional.orElseThrow(() -> new UsernameNotFoundException("Couldn't find the user!!"));
         return new CustomUserDetails(user);
     }
 
     public UserInfo checkIfUserAlreadyExists(UserInfoDTO userinfoDTO) {
-        return userRepository.findByUsername(userinfoDTO.getUsername());
+        return userRepository
+                .findByUsername(userinfoDTO.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("Couldn't find the user!!"));
     }
 
     public String signUpUser(UserInfoDTO userInfoDTO) {
