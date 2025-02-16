@@ -6,15 +6,13 @@
  */
 
 plugins {
-    // Apply the application plugin to add support for building a CLI application in Java.
-    id 'org.springframework.boot' version '3.2.2'
-    id 'io.spring.dependency-management' version '1.1.4'
-    id 'java'
     id 'application'
+    id 'java'
+    id 'org.springframework.boot' version '3.2.2'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
 
 repositories {
-    // Use Maven Central for resolving dependencies.
     mavenCentral()
 }
 
@@ -23,21 +21,16 @@ ext {
 }
 
 dependencies {
-    // Use JUnit test framework.
-    testImplementation libs.junit
-
-    // This dependency is used by the application.
     implementation libs.guava
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-bootstrap', version: '4.1.1'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.kafka:spring-kafka'
     implementation 'org.modelmapper:modelmapper:3.2.0'
-    runtimeOnly 'mysql:mysql-connector-java'
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.33'
+    implementation group: 'org.projectlombok', name:'lombok', version: "$lombokVersion"
     compileOnly group: 'org.projectlombok', name:'lombok', version: "$lombokVersion"
     annotationProcessor group: 'org.projectlombok', name: 'lombok', version: "$lombokVersion"
     testAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: "$lombokVersion"
@@ -46,14 +39,16 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt-impl:0.12.5'
     implementation 'io.jsonwebtoken:jjwt-jackson:0.12.5'
     implementation 'org.springframework.boot:spring-boot-starter'
-    implementation 'jakarta.persistence:jakarta.persistence-api:3.1.0'
-    implementation 'org.hibernate.orm:hibernate-core:6.3.1.Final'
-    implementation 'org.springframework.security:spring-security-core:6.2.2'
-    implementation 'org.springframework.security:spring-security-config:6.2.2'
-    implementation 'org.springframework.security:spring-security-web:6.2.2'
-    implementation 'org.springframework.security:spring-security-oauth2-client:6.2.2'
-    implementation 'org.springframework.data:spring-data-commons:3.2.0'
-    implementation 'jakarta.servlet:jakarta.servlet-api:6.0.0'
+    testImplementation libs.junit
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
